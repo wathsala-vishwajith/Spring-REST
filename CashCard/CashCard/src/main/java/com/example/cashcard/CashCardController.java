@@ -71,7 +71,17 @@ class CashCardController {
         return ResponseEntity.notFound().build();
     }
 
-
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> deleteCashCarddeleteCashCard(
+            @PathVariable Long id,
+            Principal principal // Add Principal to the parameter list
+    ) {
+        if (cashCardRepository.existsByIdAndOwner(id, principal.getName())) {
+            cashCardRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 
 }
